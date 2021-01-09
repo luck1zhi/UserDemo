@@ -8,7 +8,13 @@ func main() {
 	if slice == nil{
 		return
 	}
-	fmt.Println("单次出现的值：", getSingle(slice))
+	result := getSingle(slice)
+	defer func(){
+		if p:=recover(); p!=nil{
+			fmt.Println("数组有误！",p)
+		}
+	}()
+	fmt.Println("单次出现的值：", result)
 }
 
 func getSlice() []int{
@@ -29,18 +35,14 @@ func getSlice() []int{
 }
 
 func getSingle(slice []int) int {
-	//结果默认为最后一个
-	result := slice[len(slice) - 1]
-	for i:=0;i < len(slice) - 1;i=i+2{
-		if slice[i]==slice[i+1] {
-			continue
-		}else{
-			//只可能出现在左边
-			result = slice[i]
-			break
-		}
+	if slice==nil || len(slice)<=0{
+		panic("数组有误！");
 	}
-	return result
+	num:=0;
+	for i:=0;i < len(slice);i++{
+		num^=slice[i];
+	}
+	return num;
 }
 
 /**
