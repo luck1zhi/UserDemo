@@ -101,6 +101,12 @@ func main() {
 	getLinkedList()
 
 	var result *ListNode = getPos(HEAD)
+	
+	if result == nil{
+		//返回空代表没有环
+		fmt.Println("该链表没有环！")
+		return
+	}
 
 	fmt.Println("成环节点：",result)
 	fmt.Println("设置节点：",POINT)
